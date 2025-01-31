@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+package colav;
+
+message AgentUpdate {
+    required string mission_tag = 1;
+    required string agent_tag = 2;
+    message Pose {
+        required float x = 1;
+        required float y = 2;
+        required float z = 3;
+    }
+    message State {
+        required Pose pose = 1;
+        required float velocity = 2;
+        required float yaw_rate = 3;
+        required float acceleration = 4;
+    }
+    required State state = 3;
+    required string timestamp = 4;
+    required string timestep = 5;
+}
