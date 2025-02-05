@@ -2,10 +2,8 @@ syntax = "proto2";
 
 package colav;
 
-message ObstacleUpdate { 
+message ObstaclesUpdate { 
     required string mission_tag = 1;
-
-
     enum ObstacleType {
         UNSPECIFIED=0;
         VESSEL=1;
@@ -15,17 +13,27 @@ message ObstacleUpdate {
 
     message ObstacleID { 
         required string tag = 1;
-        required ObstacleType obstacle_type = 2 [default = UNSPECIFIED]; 
+        required ObstacleType type = 2 [default = UNSPECIFIED]; 
     }
 
     message Pose {
-        required float x = 1;
-        required float y = 2;
-        required float z = 3;
+        message Position {
+            required float x = 1;
+            required float y = 2;
+            required float z = 3;
+        }
+        message Orientation {
+            required float x = 1;
+            required float y = 2;
+            required float z = 3;
+            required float w = 4;
+        }
+        required Position position = 1;
+        required Orientation orientation = 2;
     }
 
     message State {
-        required Pose Pose = 1;
+        required Pose pose = 1;
         required float velocity = 2;
         required float yaw_rate = 3;
     }
@@ -36,15 +44,13 @@ message ObstacleUpdate {
     }
 
     message DynamicObstacle {
-        required ObstacleID ID = 1; 
+        required ObstacleID id = 1; 
         required State state = 2;
         required Geometry geometry = 3;
-        required float velocity = 4;
-        required float yaw_rate = 5;
     }
 
     message StaticObstacle {
-        required ObstacleID ID = 1; 
+        required ObstacleID id = 1; 
         required Pose pose = 2;
         required Geometry geometry = 3;
     }
