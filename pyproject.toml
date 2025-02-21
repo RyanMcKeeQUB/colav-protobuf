@@ -1,24 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "colav_protobuf"
-version = "0.0.1"
+dynamic = ["version"]
 description = "A package for working with the COLAV protobuf format"
+readme = "README.md"
+license = { file = "LICENSE" }
 authors = [
     {name = "Ryan",email = "r.mckee@qub.ac.uk"}
 ]
-readme = "README.md"
-requires-python = ">=3.8"
-dependencies = [
-    "protobuf (==3.20.1)"
-]
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
 ]
-license = { file = "LICENSE" }
+dependencies = [
+    "protobuf (==3.20.1)",
+    "shapely (==2.0.7)",
+]
+[project.urls]
+Documentation = ""
+Issues = ""
+Source = ""
 
-[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+[tool.hatch.version]
+path = "src/__about__.py"
 
-[tool.setuptools]
-packages = ["colav_protobuf"]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/ tests}"
+
+[tool.coverage.run]
+source_pkgs = ["colav_protobuf", "examples", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/colav_protobuf_utils/__about__.py",
+]
+
+[tool.coverage.paths]
+colav_protobuf = ["src/colav_protobuf", "*/colav-protobuf-utils/src/colav_protobuf_utils"]
+tests = ["tests", "*/colav-protobuf-utils/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
