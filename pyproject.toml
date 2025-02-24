@@ -23,8 +23,9 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-    "protobuf (==3.20.1)",
-    "shapely (==2.0.7)",
+  "pyyaml",
+  "protobuf",
+  "lark"
 ]
 [project.urls]
 Documentation = ""
@@ -37,12 +38,24 @@ path = "src/__about__.py"
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/ tests}"
 
+[tool.hatch.envs.test]
+dependencies = ["pytest","lark", "pyyaml"]
+
+[tool.hatch.envs.test.types.scripts]
+run = "pytest test/colav_protobuf/test_mission_request.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.sdist]
+packages = ["src/colav_protobuf" , "src/colav_protobuf/examples"]
+
 [tool.coverage.run]
-source_pkgs = ["colav_protobuf", "examples", "tests"]
+source_pkgs = ["colav_protobuf", "tests"]
 branch = true
 parallel = true
 omit = [
-  "src/colav_protobuf_utils/__about__.py",
+  "src/colav_protobuf/__about__.py",
 ]
 
 [tool.coverage.paths]

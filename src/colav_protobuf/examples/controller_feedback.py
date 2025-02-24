@@ -1,10 +1,11 @@
 from colav_protobuf import ControllerFeedback
 
-def mock_controller_feedback():
+
+def controller_feedback():
     """mocks controller feedback"""
     controller_feedback = ControllerFeedback()
-    controller_feedback.mission_tag = 'COLAV_MISSION_NORTH_BELFAST_TO_SOUTH_FRANCE'
-    controller_feedback.agent_tag = 'EF12_WORKBOAT'
+    controller_feedback.mission_tag = "COLAV_MISSION_NORTH_BELFAST_TO_SOUTH_FRANCE"
+    controller_feedback.agent_tag = "EF12_WORKBOAT"
     controller_feedback.ctrl_mode = ControllerFeedback.CTRLMode.Value("CRUISE")
     controller_feedback.ctrl_status = ControllerFeedback.CTRLStatus.Value("ACTIVE")
     controller_feedback.ctrl_cmd.velocity = float(15.0)

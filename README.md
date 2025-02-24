@@ -6,7 +6,11 @@
 This package contains python protobuf compilations for easy import as well as mock examples of each of these messages you can import via examples.
 
 Message types include: 
-- age
+- missionRequest
+- missionResponse
+- agentUpdate
+- obstaclesUpdate
+- controllerFeedback
 
 -----
 
@@ -27,11 +31,7 @@ The src code in [colav_protobuf](http://github.com/RyanMcKeeQUB) shows that the 
 - [src](./src/): The src contains three pkgs
     -   [colav_proto](./colav_proto/)the original proto files which were compiled by protobuf compiler [protos](./src/colav_proto/) these are un-importable but will give you a good idea of the proto structure.
     - [colav_protobuf](./src/colav_protobuf/): This is the importable python pkg you can import the different messages types as follows: 
-
-
-
-
-
+    - [examples](./src/examples/): This pkg contains mock of each of the protobufs for example and testing purposes.
 
 ## Usage
 
@@ -50,32 +50,34 @@ Examples of these object initiations are shown in the [examples](./src/examples/
 how to publish it via a python socket: 
 
 Here is a sample of proto creation of a agent configuration message: and 
-'''python
-from colav_protobuf import AgentConfig
-import socket 
 
-agent_update.mission_tag = "COLAV_MISSION_NORTH_BELFAST_TO_SOUTH_FRANCE"
-agent_update.agent_tag = "EF12_WORKBOAT"
-agent_update.state.pose.position.x =   float(3_675_830.74)
-agent_update.state.pose.position.y = float(-272_412.13)
-agent_update.state.pose.position.z =  float(4_181_577.70)
-agent_update.state.pose.orientation.x = 0
-agent_update.state.pose.orientation.y = 0
-agent_update.state.pose.orientation.z = 0
-agent_update.state.pose.orientation.w = 1
+```python
+    from colav_protobuf import AgentUpdate
+    import socket 
 
-agent_update.state.velocity = 20
-agent_update.state.yaw_rate = 0.2
-agent_update.state.acceleration = 1
+    agent_update = AgentUpdate
+    agent_update.mission_tag = "COLAV_MISSION_NORTH_BELFAST_TO_SOUTH_FRANCE"
+    agent_update.agent_tag = "EF12_WORKBOAT"
+    agent_update.state.pose.position.x =   float(3_675_830.74)
+    agent_update.state.pose.position.y = float(-272_412.13)
+    agent_update.state.pose.position.z =  float(4_181_577.70)
+    agent_update.state.pose.orientation.x = 0
+    agent_update.state.pose.orientation.y = 0
+    agent_update.state.pose.orientation.z = 0
+    agent_update.state.pose.orientation.w = 1
 
-agent_update.timestamp = "1708853235"
-agent_update.timestep = "000000000012331"
+    agent_update.state.velocity = 20
+    agent_update.state.yaw_rate = 0.2
+    agent_update.state.acceleration = 1
 
-aserialised_agent_update = agent_update.SerializeToString()
+    agent_update.timestamp = "1708853235"
+    agent_update.timestep = "000000000012331"
 
-sock = socket.socket(socket.DGRAM, socket.AFINET)
-sock.sendto('192.168.1.100', 7200)
-'''
+    aserialised_agent_update = agent_update.SerializeToString()
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.sendto(serialized_agent_update, ("192.168.1.100", 7200))
+```
 
 
 ## License
