@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 
 package colav;
 
@@ -28,5 +28,4 @@ message AgentUpdate {
     }
     required State state = 3;
     required string timestamp = 4;
-    required string timestep = 5;
 }

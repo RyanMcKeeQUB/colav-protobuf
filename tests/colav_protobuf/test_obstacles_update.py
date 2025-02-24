@@ -6,7 +6,7 @@ from colav_protobuf import ObstaclesUpdate
 
 def create_sample_obstacles_update():
     obstacles_update = ObstaclesUpdate(
-        mission_tag="test_mission", timestamp="2025-02-24T12:00:00Z", timestep="100"
+        mission_tag="test_mission", timestamp="2025-02-24T12:00:00Z"
     )
 
     dynamic_obstacle = obstacles_update.dynamic_obstacles.add()

@@ -12,7 +12,6 @@ def controller_feedback():
     feedback.ctrl_cmd.velocity = float(15.0)
     feedback.ctrl_cmd.yaw_rate = float(0.2)
     feedback.timestamp = "1708353000"
-    feedback.timestep = "000000000012331"
 
     return feedback
 
@@ -33,7 +32,6 @@ def test_controller_feedback_fields(controller_feedback):
     assert controller_feedback.ctrl_cmd.yaw_rate == pytest.approx(0.2, abs=1e-3)
 
     assert controller_feedback.timestamp == "1708353000"
-    assert controller_feedback.timestep == "000000000012331"
 
 
 def test_serialization_deserialization(controller_feedback):
@@ -56,4 +54,3 @@ def test_serialization_deserialization(controller_feedback):
         controller_feedback.ctrl_cmd.yaw_rate, abs=1e-3
     )
     assert deserialized_feedback.timestamp == controller_feedback.timestamp
-    assert deserialized_feedback.timestep == controller_feedback.timestep

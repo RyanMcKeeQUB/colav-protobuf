@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 
 package colav;
 
@@ -31,5 +31,4 @@ message ControllerFeedback {
     required CTRLStatus ctrl_status = 4 [default = UNKNOWN_STATUS];
     required CmdVelYaw ctrl_cmd = 5;
     required string timestamp = 6;
-    required string timestep = 7;
 }

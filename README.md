@@ -2,7 +2,7 @@
 
 [![PyPI - Version](https://img.shields.io/pypi/v/colav-protobuf.svg)](https://pypi.org/project/colav-protobuf)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/colav-protobuf.svg)](https://pypi.org/project/colav-protobuf)
-
+<!--[![PyPI - Protobuf Version]()]-->
 This package contains python protobuf compilations for easy import as well as mock examples of each of these messages you can import via examples.
 
 Message types include and their proto formatting include: 
