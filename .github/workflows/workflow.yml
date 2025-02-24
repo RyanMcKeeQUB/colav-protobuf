@@ -41,7 +41,7 @@ jobs:
                 hatch build
         
             - name: publish to pypi
-              if: github.event_name == 'push'
+              if: github.event_name == 'release'
               env: 
                 PYPI_USERNAME: __token__
                 PYPI_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
