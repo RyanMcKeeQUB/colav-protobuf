@@ -23,76 +23,37 @@ def test_controller_feedback_init():
 
 
 def test_controller_feedback_fields(controller_feedback):
-    assert controller_feedback.tag == "test_feedback"
-    assert controller_feedback.timestamp == "1708353000"
-    assert controller_feedback.vessel.tag == "EF12_WORKBOAT"
-    assert (
-        controller_feedback.vessel.type
-        == ControllerFeedback.Vessel.VesselType.HYDROFOIL
+    assert controller_feedback.mission_tag == "test_feedback"
+
+    assert controller_feedback.ctrl_mode == ControllerFeedback.CTRLMode.Value("CRUISE")
+    assert controller_feedback.ctrl_status == ControllerFeedback.CTRLStatus.Value(
+        "ACTIVE"
     )
-    assert controller_feedback.vessel.vessel_constraints.max_acceleration == 2.0
-    assert controller_feedback.vessel.vessel_constraints.max_deceleration == -1.0
-    assert controller_feedback.vessel.vessel_constraints.max_velocity == 30.0
-    assert controller_feedback.vessel.vessel_constraints.min_velocity == 15.0
-    assert controller_feedback.vessel.vessel_constraints.max_yaw_rate == 0.2
-    assert controller_feedback.vessel.vessel_geometry.safety_threshold == 5
+    assert controller_feedback.ctrl_cmd.velocity == pytest.approx(15.0, abs=1e-3)
+    assert controller_feedback.ctrl_cmd.yaw_rate == pytest.approx(0.2, abs=1e-3)
 
-    assert controller_feedback.position.x == pytest.approx(3675900.74, abs=1e-3)
-    assert controller_feedback.position.y == pytest.approx(-372412.13, abs=1e-3)
-    assert controller_feedback.position.z == pytest.approx(5181577.5, abs=1e-3)
-
-    assert controller_feedback.velocity.x == pytest.approx(0.0, abs=1e-3)
-    assert controller_feedback.velocity.y == pytest.approx(0.0, abs=1e-3)
-    assert controller_feedback.velocity.z == pytest.approx(0.0, abs=1e-3)
-
-    assert controller_feedback.acceleration.x == pytest.approx(0.0, abs=1e-3)
-    assert controller_feedback.acceleration.y == pytest.approx(0.0, abs=1e-3)
-    assert controller_feedback.acceleration.z == pytest.approx(0.0, abs=1e-3)
-
-    assert controller_feedback.yaw == pytest.approx(0.0, abs=1e-3)
-    assert controller_feedback.yaw_rate == pytest.approx(0.0, abs=1e-3)
+    assert controller_feedback.timestamp == "1708353000"
+    assert controller_feedback.timestep == "000000000012331"
 
 
 def test_serialization_deserialization(controller_feedback):
+    # Serialize the controller_feedback to a string
     serialized_feedback = controller_feedback.SerializeToString()
+
+    # Deserialize the string back to a ControllerFeedback object
     deserialized_feedback = ControllerFeedback()
     deserialized_feedback.ParseFromString(serialized_feedback)
-    assert deserialized_feedback.tag == controller_feedback.tag
+
+    # Verify that the deserialized object matches the original
+    assert deserialized_feedback.mission_tag == controller_feedback.mission_tag
+    assert deserialized_feedback.agent_tag == controller_feedback.agent_tag
+    assert deserialized_feedback.ctrl_mode == controller_feedback.ctrl_mode
+    assert deserialized_feedback.ctrl_status == controller_feedback.ctrl_status
+    assert deserialized_feedback.ctrl_cmd.velocity == pytest.approx(
+        controller_feedback.ctrl_cmd.velocity, abs=1e-3
+    )
+    assert deserialized_feedback.ctrl_cmd.yaw_rate == pytest.approx(
+        controller_feedback.ctrl_cmd.yaw_rate, abs=1e-3
+    )
     assert deserialized_feedback.timestamp == controller_feedback.timestamp
-    assert deserialized_feedback.vessel.tag == controller_feedback.vessel.tag
-    assert deserialized_feedback.vessel.type == controller_feedback.vessel.type
-    assert (
-        deserialized_feedback.vessel.vessel_constraints.max_acceleration
-        == controller_feedback.vessel.vessel_constraints.max_acceleration
-    )
-    assert (
-        deserialized_feedback.vessel.vessel_constraints.max_deceleration
-        == controller_feedback.vessel.vessel_constraints.max_deceleration
-    )
-    assert (
-        deserialized_feedback.vessel.vessel_constraints.max_velocity
-        == controller_feedback.vessel.vessel_constraints.max_velocity
-    )
-    assert (
-        deserialized_feedback.vessel.vessel_constraints.min_velocity
-        == controller_feedback.vessel.vessel_constraints.min_velocity
-    )
-    assert (
-        deserialized_feedback.vessel.vessel_constraints.max_yaw_rate
-        == controller_feedback.vessel.vessel_constraints.max_yaw_rate
-    )
-    assert (
-        deserialized_feedback.vessel.vessel_geometry.safety_threshold
-        == controller_feedback.vessel.vessel_geometry.safety_threshold
-    )
-    assert deserialized_feedback.position.x == controller_feedback.position.x
-    assert deserialized_feedback.position.y == controller_feedback.position.y
-    assert deserialized_feedback.position.z == controller_feedback.position.z
-    assert deserialized_feedback.velocity.x == controller_feedback.velocity.x
-    assert deserialized_feedback.velocity.y == controller_feedback.velocity.y
-    assert deserialized_feedback.velocity.z == controller_feedback.velocity.z
-    assert deserialized_feedback.acceleration.x == controller_feedback.acceleration.x
-    assert deserialized_feedback.acceleration.y == controller_feedback.acceleration.y
-    assert deserialized_feedback.acceleration.z == controller_feedback.acceleration.z
-    assert deserialized_feedback.yaw == controller_feedback.yaw
-    assert deserialized_feedback.yaw_rate == controller_feedback.yaw_rate
+    assert deserialized_feedback.timestep == controller_feedback.timestep
