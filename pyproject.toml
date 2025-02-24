@@ -29,9 +29,10 @@ dependencies = [
   "lark"
 ]
 [project.urls]
-Documentation = ""
-Issues = ""
-Source = ""
+Documentation = "https://github.com/RyanMcKeeQUB/colav_protobuf/blob/main/README.md"
+Repository = "https://github.com/RyanMcKeeQUB/colav_protobuf"
+Issues = "https://github.com/RyanMcKeeQUB/colav_protobuf/issues"
+Source = "https://pypi.org/project/colav-protobuf/"
 
 [tool.hatch.version]
 path = "src/__about__.py"
