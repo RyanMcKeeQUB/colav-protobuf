@@ -3,15 +3,18 @@ syntax = "proto3";
 package colav;
 
 message MissionResponse {
-    required string mission_tag = 1;
-    required string mission_start_timestamp = 2;
+    string tag = 1;
+    string timestamp = 2;
 
-    enum MissionResponseEnum { 
-        UNKOWN=0;
-        MISSION_STARTING=1;
-        MISSION_ERROR=2;
-        MISSION_INVALID=3;
+    message MissionResponseDetails {
+        enum MissionResponseEnum { 
+            UNKNOWN = 0;
+            MISSION_STARTING = 1;
+            MISSION_ERROR = 2;
+            MISSION_INVALID = 3;
+        }
+        MissionResponseEnum response = 1;
+        string response_details = 2;
     }
-    required MissionResponseEnum mission_response = 3;
-    required string mission_response_details = 4;
+    MissionResponseDetails response = 3;
 }
