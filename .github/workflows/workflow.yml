@@ -61,7 +61,7 @@ jobs:
         run: hatch test
 
   deploy:
-    name: Publish to PyPI
+    name: Publish to PyPI if Release
     needs: test
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
