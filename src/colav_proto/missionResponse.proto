@@ -13,7 +13,7 @@ message MissionResponse {
             MISSION_ERROR = 2;
             MISSION_INVALID = 3;
         }
-        ResponseTypeEnum response = 1;
+        ResponseTypeEnum type = 1;
         string details = 2;
     }
     MissionResponseMsg response = 3;

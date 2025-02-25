@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15missionResponse.proto\x12\x05\x63olav\"\xc3\x02\n\x0fMissionResponse\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\t\x12;\n\x08response\x18\x03 \x01(\x0b\x32).colav.MissionResponse.MissionResponseMsg\x1a\xd2\x01\n\x12MissionResponseMsg\x12L\n\x08response\x18\x01 \x01(\x0e\x32:.colav.MissionResponse.MissionResponseMsg.ResponseTypeEnum\x12\x0f\n\x07\x64\x65tails\x18\x02 \x01(\t\"]\n\x10ResponseTypeEnum\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x14\n\x10MISSION_STARTING\x10\x01\x12\x11\n\rMISSION_ERROR\x10\x02\x12\x13\n\x0fMISSION_INVALID\x10\x03\x62\x06proto3'
+  serialized_pb=b'\n\x15missionResponse.proto\x12\x05\x63olav\"\xbf\x02\n\x0fMissionResponse\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\t\x12;\n\x08response\x18\x03 \x01(\x0b\x32).colav.MissionResponse.MissionResponseMsg\x1a\xce\x01\n\x12MissionResponseMsg\x12H\n\x04type\x18\x01 \x01(\x0e\x32:.colav.MissionResponse.MissionResponseMsg.ResponseTypeEnum\x12\x0f\n\x07\x64\x65tails\x18\x02 \x01(\t\"]\n\x10ResponseTypeEnum\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x14\n\x10MISSION_STARTING\x10\x01\x12\x11\n\rMISSION_ERROR\x10\x02\x12\x13\n\x0fMISSION_INVALID\x10\x03\x62\x06proto3'
 )
 
 
@@ -54,8 +54,8 @@ _MISSIONRESPONSE_MISSIONRESPONSEMSG_RESPONSETYPEENUM = _descriptor.EnumDescripto
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=263,
-  serialized_end=356,
+  serialized_start=259,
+  serialized_end=352,
 )
 _sym_db.RegisterEnumDescriptor(_MISSIONRESPONSE_MISSIONRESPONSEMSG_RESPONSETYPEENUM)
 
@@ -69,7 +69,7 @@ _MISSIONRESPONSE_MISSIONRESPONSEMSG = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='response', full_name='colav.MissionResponse.MissionResponseMsg.response', index=0,
+      name='type', full_name='colav.MissionResponse.MissionResponseMsg.type', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -96,7 +96,7 @@ _MISSIONRESPONSE_MISSIONRESPONSEMSG = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=146,
-  serialized_end=356,
+  serialized_end=352,
 )
 
 _MISSIONRESPONSE = _descriptor.Descriptor(
@@ -141,10 +141,10 @@ _MISSIONRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=33,
-  serialized_end=356,
+  serialized_end=352,
 )
 
-_MISSIONRESPONSE_MISSIONRESPONSEMSG.fields_by_name['response'].enum_type = _MISSIONRESPONSE_MISSIONRESPONSEMSG_RESPONSETYPEENUM
+_MISSIONRESPONSE_MISSIONRESPONSEMSG.fields_by_name['type'].enum_type = _MISSIONRESPONSE_MISSIONRESPONSEMSG_RESPONSETYPEENUM
 _MISSIONRESPONSE_MISSIONRESPONSEMSG.containing_type = _MISSIONRESPONSE
 _MISSIONRESPONSE_MISSIONRESPONSEMSG_RESPONSETYPEENUM.containing_type = _MISSIONRESPONSE_MISSIONRESPONSEMSG
 _MISSIONRESPONSE.fields_by_name['response'].message_type = _MISSIONRESPONSE_MISSIONRESPONSEMSG
