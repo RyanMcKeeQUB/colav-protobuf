@@ -6,15 +6,15 @@ message MissionResponse {
     string tag = 1;
     string timestamp = 2;
 
-    message MissionResponseDetails {
-        enum MissionResponseEnum { 
+    message MissionResponseMsg {
+        enum ResponseTypeEnum { 
             UNKNOWN = 0;
             MISSION_STARTING = 1;
             MISSION_ERROR = 2;
             MISSION_INVALID = 3;
         }
-        MissionResponseEnum response = 1;
-        string response_details = 2;
+        ResponseTypeEnum response = 1;
+        string details = 2;
     }
-    MissionResponseDetails response = 3;
+    MissionResponseMsg response = 3;
 }

@@ -40,5 +40,5 @@ message MissionRequest {
         Point position = 1;
         float safety_radius = 2;
     }
-    GoalWaypoint goal_position = 5;
+    GoalWaypoint goal_waypoint = 5;
 }
