@@ -1,4 +1,4 @@
-.vscode/
-dist/
+./.vscode/
+./dist/
 **/__pycache__/
 **/.pytest_cache/
