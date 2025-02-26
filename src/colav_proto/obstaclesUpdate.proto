@@ -3,33 +3,33 @@ syntax = "proto3";
 package colav;
 
 message ObstaclesUpdate { 
-    string mission_tag = 1;
-    enum ObstacleType {
-        UNSPECIFIED=0;
+    enum DynamicObstacleType {
+        DYNAMIC_UNSPECIFIED=0;
         VESSEL=1;
-        LAND_MASS=2;
-        BUOY=3;
     }
 
-    message ObstacleID { 
-        string tag = 1;
-        ObstacleType type = 2; 
+    enum StaticObstacleType {
+        STATIC_UNSPECIFIED=0;
+        LAND_MASS=1;
+        BUOY=2;
+    }
+    
+    message Point {
+        float x = 1;
+        float y = 2;
+        float z = 3;
+    }
+
+    message Quaternion {
+        float x = 1;
+        float y = 2;
+        float z = 3;
+        float w = 4;
     }
 
     message Pose {
-        message Position {
-            float x = 1;
-            float y = 2;
-            float z = 3;
-        }
-        message Orientation {
-            float x = 1;
-            float y = 2;
-            float z = 3;
-            float w = 4;
-        }
-        Position position = 1;
-        Orientation orientation = 2;
+        Point position = 1;
+        Quaternion orientation = 2;
     }
 
     message State {
@@ -38,25 +38,33 @@ message ObstaclesUpdate {
         float yaw_rate = 3;
     }
 
-    message Geometry {
-        float acceptance_radius = 1;
-        repeated Pose polyshape_points = 2; 
+    message DynamicObstacleGeometry {
+        float loa = 1;
+        float beam = 2;
+        float safety_radius = 3;
+    }
+
+    message StaticObstacleGeometry {
+        repeated Point polyshape_points = 1;
+        float inflation_radius = 2;
     }
 
     message DynamicObstacle {
-        ObstacleID id = 1; 
-        State state = 2;
-        Geometry geometry = 3;
+        string tag = 1;
+        DynamicObstacleType type = 2;
+        State state = 3;
+        DynamicObstacleGeometry geometry = 4;
     }
 
     message StaticObstacle {
-        ObstacleID id = 1; 
-        Pose pose = 2;
-        Geometry geometry = 3;
+        string tag = 1;
+        StaticObstacleType type = 2; 
+        Pose pose = 3;
+        StaticObstacleGeometry geometry = 4;
     }
 
+    string mission_tag = 1;
     repeated DynamicObstacle dynamic_obstacles = 2;
     repeated StaticObstacle static_obstacles = 3;
-
     string timestamp = 4;
 }

@@ -10,8 +10,8 @@ def create_sample_obstacles_update():
     )
 
     dynamic_obstacle = obstacles_update.dynamic_obstacles.add()
-    dynamic_obstacle.id.tag = "obstacle_1"
-    dynamic_obstacle.id.type = ObstaclesUpdate.ObstacleType.VESSEL
+    dynamic_obstacle.tag = "obstacle_1"
+    dynamic_obstacle.type = ObstaclesUpdate.DynamicObstacleType.VESSEL
 
     dynamic_obstacle.state.pose.position.x = 10.0
     dynamic_obstacle.state.pose.position.y = 20.0
@@ -25,15 +25,18 @@ def create_sample_obstacles_update():
     dynamic_obstacle.state.velocity = 5.0
     dynamic_obstacle.state.yaw_rate = 0.1
 
-    dynamic_obstacle.geometry.acceptance_radius = 2.0
+    dynamic_obstacle.geometry.loa = 10.0
+    dynamic_obstacle.geometry.beam = 2.0
+    dynamic_obstacle.geometry.safety_radius = 2.0
+
     polyshape_point = dynamic_obstacle.geometry.polyshape_points.add()
     polyshape_point.position.x = 10.0
     polyshape_point.position.y = 20.0
     polyshape_point.position.z = 0.0
 
     static_obstacle = obstacles_update.static_obstacles.add()
-    static_obstacle.id.tag = "obstacle_2"
-    static_obstacle.id.type = ObstaclesUpdate.ObstacleType.LAND_MASS
+    static_obstacle.tag = "obstacle_2"
+    static_obstacle.type = ObstaclesUpdate.StaticObstacleType.LAND_MASS
 
     static_obstacle.pose.position.x = 30.0
     static_obstacle.pose.position.y = 40.0
@@ -44,7 +47,7 @@ def create_sample_obstacles_update():
     static_obstacle.pose.orientation.z = 0.0
     static_obstacle.pose.orientation.w = 1.0
 
-    static_obstacle.geometry.acceptance_radius = 5.0
+    static_obstacle.geometry.inflation_radius = 5.0
 
     return obstacles_update
 
