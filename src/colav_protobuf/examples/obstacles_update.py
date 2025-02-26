@@ -10,11 +10,15 @@ mock_agent_y = -272_412.13
 mock_agent_z = 4_181_577.70
 
 
-class ObstacleTypeEnum(Enum):
-    UNSPECIFIED = ObstaclesUpdate.ObstacleType.UNSPECIFIED
-    VESSEL = ObstaclesUpdate.ObstacleType.VESSEL
-    LAND_MASS = ObstaclesUpdate.ObstacleType.LAND_MASS
-    BUOY = ObstaclesUpdate.ObstacleType.BUOY
+class DynamicObstacleTypeEnum(Enum):
+    UNSPECIFIED = ObstaclesUpdate.DynamicObstacleType.DYNAMIC_UNSPECIFIED
+    VESSEL = ObstaclesUpdate.DynamicObstacleType.VESSEL
+
+
+class StaticObstacleTypeEnum(Enum):
+    STATIC_UNSPECIFIED = ObstaclesUpdate.StaticObstacleType.STATIC_UNSPECIFIED
+    BUOY = ObstaclesUpdate.StaticObstacleType.BUOY
+    LAND_MASS = ObstaclesUpdate.StaticObstacleType.LAND_MASS
 
 
 def _mock_dynamic_obstacles(
@@ -31,11 +35,11 @@ def _mock_dynamic_obstacles(
         obstacles_update.dynamic_obstacles.add()
 
     for x in range(num_dynamic_obstacles):
-        obstacle_type = random.choice(list(ObstacleTypeEnum))
-        obstacles_update.dynamic_obstacles[x].id.tag = (
+        obstacle_type = random.choice(list(DynamicObstacleTypeEnum))
+        obstacles_update.dynamic_obstacles[x].tag = (
             f"{obstacle_class}_{obstacle_type.name}_{x}"
         )
-        obstacles_update.dynamic_obstacles[x].id.type = obstacle_type.value
+        obstacles_update.dynamic_obstacles[x].type = obstacle_type.value
 
         p = _random_position(position=agent_position, range=detection_range)
         obstacles_update.dynamic_obstacles[x].state.pose.position.x = float(p[0])
@@ -48,37 +52,63 @@ def _mock_dynamic_obstacles(
         obstacles_update.dynamic_obstacles[x].state.pose.orientation.z = float(q[2])
         obstacles_update.dynamic_obstacles[x].state.pose.orientation.w = float(q[3])
 
-        obstacles_update.dynamic_obstacles[x].geometry.acceptance_radius = float(
+        obstacles_update.dynamic_obstacles[x].geometry.safety_radius = float(
             random.uniform(1.2, 5)
         )
+        obstacles_update.dynamic_obstacles[x].geometry.loa = float(5)
+        obstacles_update.dynamic_obstacles[x].geometry.beam = float(2.5)
+        # random_polyshape_vertices = _random_polyshape(min_vertices=3, max_vertices=15)
 
-        random_polyshape_vertices = _random_polyshape(min_vertices=3, max_vertices=15)
+        # for i in range(random_polyshape_vertices.shape[0]):
+        #     point = obstacles_update.dynamic_obstacles[
+        #         x
+        #     ].geometry.polyshape_points.add()
+        #     point.position.x = random_polyshape_vertices[i, 0]
+        #     point.position.y = random_polyshape_vertices[i, 1]
+        #     point.position.z = 0
 
-        for i in range(random_polyshape_vertices.shape[0]):
-            point = obstacles_update.dynamic_obstacles[
-                x
-            ].geometry.polyshape_points.add()
-            point.position.x = random_polyshape_vertices[i, 0]
-            point.position.y = random_polyshape_vertices[i, 1]
-            point.position.z = 0
+        #     point.orientation.x = 0
+        #     point.orientation.y = 0
+        #     point.orientation.z = 0
+        #     point.orientation.w = 1
 
-            point.orientation.x = 0
-            point.orientation.y = 0
-            point.orientation.z = 0
-            point.orientation.w = 1
-
-        obstacles_update.dynamic_obstacles[x].state.velocity = random.uniform(15, 30)
-        obstacles_update.dynamic_obstacles[x].state.yaw_rate = random.uniform(0, 2.0)
+        # obstacles_update.dynamic_obstacles[x].state.velocity = random.uniform(15, 30)
+        # obstacles_update.dynamic_obstacles[x].state.yaw_rate = random.uniform(0, 2.0)
 
     return obstacles_update
 
 
 def _mock_static_obstacles(
-    obstacles_update: ObstaclesUpdate, num_static_obstacles: int = 5
+    agent_position: List[float],
+    obstacles_update: ObstaclesUpdate,
+    num_static_obstacles: int = 5,
+    detection_range: float = 1000,
 ) -> ObstaclesUpdate:
     """mocks static obstacle sin teh obstacle update"""
+    obstacle_class = "STATIC_OBSTACLE"
+    for _ in range(num_static_obstacles):
+        obstacles_update.static_obstacles.add()
     for x in range(0, num_static_obstacles):
-        pass
+        obstacle_type = random.choice(list(StaticObstacleTypeEnum))
+        obstacles_update.static_obstacles[x].tag = (
+            f"{obstacle_class}_{obstacle_type.name}_{x}"
+        )
+        obstacles_update.static_obstacles[x].type = obstacle_type.value
+        p = _random_position(position=agent_position, range=detection_range)
+        obstacles_update.static_obstacles[x].pose.position.x = float(p[0])
+        obstacles_update.static_obstacles[x].pose.position.x = float(p[1])
+        obstacles_update.static_obstacles[x].pose.position.x = float(p[2])
+
+        q = _random_quaternion()
+        obstacles_update.static_obstacles[x].pose.orientation.x = float(q[0])
+        obstacles_update.static_obstacles[x].pose.orientation.y = float(q[1])
+        obstacles_update.static_obstacles[x].pose.orientation.z = float(q[2])
+        obstacles_update.static_obstacles[x].pose.orientation.w = float(q[3])
+
+        obstacles_update.static_obstacles[x].geometry.inflation_radius = float(
+            random.uniform(1.2, 5)
+        )
+
     return obstacles_update
 
 
@@ -136,6 +166,7 @@ obstacles_update = _mock_dynamic_obstacles(
     num_dynamic_obstacles=int(random.uniform(int(1), int(5))),
 )
 obstacles_update = _mock_static_obstacles(
+    agent_position=[mock_agent_x, mock_agent_y, mock_agent_z],
     obstacles_update=obstacles_update,
     num_static_obstacles=int(random.uniform(int(1), int(5))),
 )
