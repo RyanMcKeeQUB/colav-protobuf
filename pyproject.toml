@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "colav_protobuf"
+name = "colav-protobuf"
 dynamic = ["version"]
 description = "A package for working with the COLAV protobuf format"
 readme = "README.md"
