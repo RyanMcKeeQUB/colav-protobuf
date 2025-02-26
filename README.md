@@ -4,6 +4,8 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/colav-protobuf.svg)](https://pypi.org/project/colav-protobuf)
 <!--[![PyPI - Protobuf Version]()]-->
 This package contains python protobuf compilations for easy import as well as mock examples of each of these messages you can import via examples.
+![unsafe set calculation](./docs/unsafe_set_calculation.png)
+/home/ryan/colav/python_pkgs/colav-unsafe-set/docs
 
 Message types include and their proto formatting include: 
 - [missionRequest](https://github.com/RyanMcKeeQUB/colav_protobuf/tree/main/src/colav_proto/missionRequest.proto)
